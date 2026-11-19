@@ -924,6 +924,182 @@
       }
       .legal-panel .close-x:hover{ color:var(--ink); }
 
+      /* ---------- Site-wide bento adoption (everything below the hero) ---------- */
+      :root{
+        --glass-fill:linear-gradient(155deg, rgba(255,253,248,.84), rgba(250,244,231,.68));
+        --glass-border:#E9DFC9;
+        --glass-shadow:0 24px 60px rgba(90,64,25,.13), inset 0 1px 0 rgba(255,255,255,.8);
+        --glass-shadow-lift:0 30px 64px rgba(90,64,25,.18), inset 0 1px 0 rgba(255,255,255,.85);
+      }
+      body{ background:linear-gradient(180deg, #F6F1E7 0%, #F3ECDC 46%, #EFE7D8 100%); }
+      .cfg-sec,.collection-sec,.fall-sec,.tryon-sec,.heritage-sec,.voices-sec,.circle-sec{ background:transparent; }
+      .glass{
+        background:var(--glass-fill); border:1px solid var(--glass-border); border-radius:28px;
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+
+      /* Configurator — glass stage panel + glass configure card + pill price bar */
+      .cfg-grid{ grid-template-columns:minmax(0,1fr) 320px; gap:16px; align-items:stretch; margin-top:44px; }
+      .cfg-stage-panel{
+        display:grid; grid-template-columns:64px minmax(0,1fr); gap:10px; align-items:center;
+        padding:30px 30px 26px;
+        background:var(--glass-fill); border:1px solid var(--glass-border); border-radius:28px;
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .cfg-stage-panel .rail{ gap:26px; }
+      .cfg-stage-panel .stage{ width:100%; min-width:0; }
+      .panel{
+        padding:28px 26px; display:flex; flex-direction:column;
+        background:var(--glass-fill); border:1px solid var(--glass-border); border-radius:28px;
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .panel .group:last-of-type{ margin-bottom:6px; }
+      .opt{ border-radius:999px; }
+      .cfg-pricebar{
+        grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between;
+        gap:22px; flex-wrap:wrap; padding:12px 12px 12px 30px; border-radius:999px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .cfg-pricebar .summary-line{ margin:0; }
+      .cfg-pricebar .price{ margin:0; }
+      .reserve{ width:auto; min-width:236px; border-radius:999px; }
+
+      /* Fall Collection — framed bento card, glass overlay controls */
+      .fall-card{
+        border-radius:28px; border:1px solid var(--glass-border);
+        box-shadow:0 24px 60px rgba(90,64,25,.2);
+      }
+      .fall-shop{
+        border-radius:999px; background:rgba(255,253,248,.85);
+        border:1px solid rgba(255,255,255,.65); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+        box-shadow:0 10px 26px rgba(20,12,2,.25);
+      }
+      .fall-progress{
+        background:rgba(18,11,4,.3); border:1px solid rgba(255,255,255,.28); border-radius:999px;
+        padding:8px 10px 8px 22px; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      }
+      .fall-arrow{
+        background:rgba(255,253,248,.16); border-color:rgba(255,255,255,.55);
+        backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      }
+
+      /* The Collection — shell aligned to the unified system */
+      .bento-shell{ border-radius:28px; }
+      .bento-panel{ backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+
+      /* Virtual Try-On — glass frame, glass card, mini list-cards, glass summary */
+      .tryon-grid{ gap:16px; }
+      .tryon-visual{
+        padding:10px; border-radius:28px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .tryon-visual img{ border-radius:20px; }
+      .try-live{
+        border-radius:999px; background:rgba(255,253,248,.88); color:#201304;
+        border:1px solid rgba(255,255,255,.7); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+        box-shadow:0 12px 30px rgba(20,12,2,.3);
+      }
+      .try-live:hover{ background:var(--gold); }
+      .look-panel{
+        padding:28px; border-radius:28px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .look-row{
+        background:rgba(255,253,248,.78); border:1px solid #EFE5CE; border-radius:20px;
+        padding:12px 14px; margin-bottom:12px;
+      }
+      .look-row:last-of-type{ border-bottom:1px solid #EFE5CE; }
+      .look-row img{ border-radius:14px; border:none; }
+      .add-btn{ border-radius:999px; padding:10px 20px; }
+      .look-summary{
+        border-radius:20px; margin-top:16px;
+        background:linear-gradient(155deg, rgba(255,253,248,.9), rgba(244,238,226,.78));
+        border:1px solid var(--glass-border); color:var(--ink);
+        backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      }
+      .look-summary .items{ color:var(--muted); }
+      .look-summary .items strong{ color:var(--bronze); }
+      .look-summary .total{ color:var(--ink); }
+
+      /* Heritage — on the bento field: glass copy panel, framed photo, glass stat tiles */
+      .heritage-sec{ color:var(--ink); }
+      .heritage-grid{ gap:16px; align-items:stretch; }
+      .heritage-copy{
+        padding:38px; border-radius:28px; display:flex; flex-direction:column;
+        justify-content:center; align-items:flex-start;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .heritage-copy .eyebrow{ color:var(--bronze); }
+      .heritage-copy .serif-head{ color:var(--ink); }
+      .heritage-copy p.body{ color:var(--muted); }
+      .btn-outline{ border-radius:999px; border-color:var(--bronze); color:var(--bronze); }
+      .btn-outline:hover{ background:var(--gold); border-color:var(--gold); color:#201304; }
+      .heritage-photo{
+        padding:10px; border-radius:28px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .heritage-photo::before{ display:none; }
+      .heritage-photo img{ border-radius:20px; height:100%; }
+      .stat-row{ border-top:none; padding-top:0; margin-top:16px; gap:16px; }
+      .stat{
+        padding:26px 12px 22px; border-radius:24px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+        transition:transform .28s var(--ease), box-shadow .28s ease;
+      }
+      .stat:hover{ transform:translateY(-4px); box-shadow:var(--glass-shadow-lift); }
+      .stat .num{ color:var(--bronze); }
+      .stat .lbl{ color:var(--muted); }
+
+      /* Voices — glass testimonial panels, softer watermark */
+      .voices-grid{ gap:16px; }
+      .voice-card{
+        border-radius:28px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .voice-card:hover{ transform:translateY(-4px); box-shadow:var(--glass-shadow-lift); }
+      .watermark{ -webkit-text-stroke:1px rgba(138,109,59,.1); }
+
+      /* Inner Circle — centred glass panel, inset pill input, ink pill button */
+      .circle-panel{
+        max-width:680px; margin:0 auto; padding:52px 44px; border-radius:28px;
+        background:var(--glass-fill); border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      }
+      .circle-form{ gap:10px; }
+      .circle-form input{
+        border:1px solid var(--hairline); border-right:1px solid var(--hairline); border-radius:999px;
+        background:rgba(255,255,255,.65); box-shadow:inset 0 2px 8px rgba(90,64,25,.09);
+        padding:14px 22px;
+      }
+      .circle-form button{ border-radius:999px; }
+      .circle-success{ border-radius:20px; }
+
+      /* Footer — ink ground kept, components adopt the glass language */
+      .pay-chip{
+        border-radius:999px; background:rgba(255,255,255,.06);
+        backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+      }
+      .social-btn{ background:rgba(255,255,255,.06); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+      .foot-links{ gap:8px 10px; }
+      .foot-links button,.foot-links a{ border-radius:999px; padding:10px 16px; }
+      .foot-links button:hover,.foot-links a:hover{ background:rgba(201,168,106,.14); }
+
+      /* Overlays — unified glass panel language */
+      .concierge{ border-radius:28px; box-shadow:0 30px 70px rgba(0,0,0,.42); }
+      .concierge .send{ border-radius:999px; }
+      .legal-panel{ border-radius:28px; border:1px solid var(--glass-border); }
+      .search-tags a{
+        border-radius:999px; background:rgba(255,255,255,.05);
+        backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+      }
+
       /* ---------- Phone composition (390 / 360) ---------- */
       @media (max-width:900px){
         .section{ padding:64px 20px; }
@@ -1035,6 +1211,37 @@
         .dust i,.try-live .dot,.ring-highlight.on,.slim-brand,.deal-card{ animation:none !important; }
         .ring-highlight.on{ opacity:1; transform:scale(1); }
         *{ transition-duration:.01ms !important; }
+      }
+
+      /* ---------- Phone: bento adoption stacking ---------- */
+      @media (max-width:900px){
+        .cfg-grid{ grid-template-columns:1fr; gap:12px; margin-top:26px; }
+        .cfg-stage-panel{ grid-template-columns:1fr; padding:20px 16px 18px; border-radius:24px; }
+        .panel{ margin-top:0; padding:24px 20px; border-radius:24px; }
+        .cfg-pricebar{
+          border-radius:24px; padding:18px; flex-direction:column; flex-wrap:nowrap;
+          align-items:stretch; text-align:center; gap:12px;
+        }
+        .cfg-pricebar .price{ text-align:center; }
+        .reserve{ width:100%; min-width:0; min-height:52px; }
+        .fall-card{ border-radius:24px; }
+        .fall-progress{ padding:6px 8px 6px 16px; }
+        .bento-shell{ border-radius:24px; }
+        .tryon-grid{ gap:12px; }
+        .tryon-visual{ border-radius:24px; }
+        .tryon-visual img{ border-radius:18px; }
+        .look-panel{ border-radius:24px; padding:24px 18px 18px; }
+        .heritage-grid{ gap:12px; }
+        .heritage-copy{ border-radius:24px; padding:28px 22px; }
+        .heritage-photo{ border-radius:24px; }
+        .heritage-photo img{ border-radius:18px; }
+        .stat-row{ gap:12px; margin-top:12px; }
+        .stat{ border-radius:20px; padding:20px 8px 16px; }
+        .voices-grid{ gap:12px; }
+        .voice-card{ border-radius:24px; }
+        .circle-panel{ border-radius:24px; padding:36px 22px; }
+        .concierge{ border-radius:24px; }
+        .legal-panel{ border-radius:24px; }
       }
     </style>
   </head>
@@ -1538,7 +1745,8 @@
                   h('h2', { className: 'sec-title rv' }, 'THE 3D CONFIGURATOR'),
                   h('div', { className: 'view-row rv' }, thumbs),
                   h('div', { className: 'cfg-grid' },
-                    h('div', { className: 'rail rv' },
+                    h('div', { className: 'cfg-stage-panel rv' },
+                    h('div', { className: 'rail' },
                       h('span', { className: 'rail-icon', 'aria-hidden': 'true' }, h(IcoPin)),
                       thumbs,
                       h('button', {
@@ -1548,7 +1756,7 @@
                       }, h(IcoPen)),
                       h('span', { className: 'rail-icon', 'aria-hidden': 'true' }, h(IcoTarget))
                     ),
-                    h('div', { className: 'stage rv rv-d1' },
+                    h('div', { className: 'stage' },
                       h('div', { className: 'stage-visual' },
                         STONES.map(function (s) {
                           return h('div', { key: s.id, className: 'halo halo-' + s.id + (stone.id === s.id ? ' on' : ''), 'aria-hidden': 'true' });
@@ -1567,8 +1775,9 @@
                       ),
                       h('div', { className: 'pool-shadow', 'aria-hidden': 'true' }),
                       h('p', { className: 'caption-i' }, 'Interactive 3D Preview — Customise Every Detail')
+                    )
                     ),
-                    h('div', { className: 'panel rv rv-d2' },
+                    h('div', { className: 'panel rv rv-d1' },
                       h('h3', { className: 'panel-title' },
                         h('span', { className: 'diamond', 'aria-hidden': 'true' }), 'Configure Your Piece'),
                       h('div', { className: 'group', role: 'radiogroup', 'aria-label': 'Metal' },
@@ -1605,8 +1814,9 @@
                           placeholder: 'Engrave a name or a date…',
                           onChange: function (e) { setEngraving(e.target.value); }
                         })
-                      ) : null,
-                      h('hr', { className: 'panel-rule' }),
+                      ) : null
+                    ),
+                    h('div', { className: 'cfg-pricebar rv rv-d2' },
                       h('p', { className: 'summary-line' },
                         metal.name + ' · ' + stone.name,
                         engraving.trim() ? h('span', { className: 'eng' }, ' — “' + engraving.trim() + '”') : null),
@@ -1876,7 +2086,8 @@
 
               /* ===== 8 · Inner Circle ===== */
               h('section', { className: 'section circle-sec', id: 'circle', 'aria-label': 'Join the Inner Circle' },
-                h('div', { className: 'wrap rv' },
+                h('div', { className: 'wrap' },
+                  h('div', { className: 'circle-panel rv' },
                   h('h2', { className: 'sec-title' }, 'JOIN THE INNER CIRCLE'),
                   h('p', { className: 'line' }, 'Be the first to discover new collections, private previews and atelier stories.'),
                   subscribed
@@ -1894,6 +2105,7 @@
                         h('button', { type: 'submit' }, 'Subscribe')
                       ),
                   h('p', { className: 'circle-small' }, 'One letter a month. No spam — unsubscribe anytime.')
+                  )
                 )
               )
             ), /* end main */
