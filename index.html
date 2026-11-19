@@ -3,7 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      /* Apply the saved theme before first paint (the app keeps it in sync). */
+      try {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('aurelia-theme') === 'dark' ? 'dark' : 'light');
+      } catch (e) {}
+    </script>
     <link rel="icon" href="data:," />
     <title>AURELIA — Haute Joaillerie | Elegance Redefined</title>
     <meta name="description" content="AURELIA Haute Joaillerie — bespoke fine jewellery since 1924. Explore rings, necklaces, earrings and more, shop the collection, and configure your solitaire." />
