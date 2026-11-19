@@ -365,12 +365,14 @@
       .bento-shell{
         background:var(--bento-glass); border:1px solid var(--glass-border); border-radius:32px; padding:20px;
         box-shadow:var(--shadow), inset 0 1px 0 var(--panel-hi); backdrop-filter:blur(18px) saturate(1.4); -webkit-backdrop-filter:blur(18px) saturate(1.4);
+        backdrop-filter:url(#lg-refract) blur(3px) saturate(1.6);
       }
       .bento-grid{ display:grid; grid-template-columns:4fr 8fr; gap:16px; align-items:stretch; }
       .bento-panel{
         background:var(--bento-panel); border:1px solid var(--glass-border); border-radius:28px;
         box-shadow:inset 0 1px 0 var(--panel-hi), var(--panel-shadow);
         backdrop-filter:blur(18px) saturate(1.4); -webkit-backdrop-filter:blur(18px) saturate(1.4);
+        backdrop-filter:url(#lg-refract) blur(3px) saturate(1.6);
       }
       .lift{ transition:transform .28s var(--ease), box-shadow .28s ease; }
       .lift:hover{ transform:translateY(-3px); box-shadow:var(--lift-shadow); }
@@ -609,7 +611,8 @@
       .panel{
         padding:28px 26px; display:flex; flex-direction:column;
         background:var(--glass); border:1px solid var(--glass-border); border-radius:28px;
-        box-shadow:var(--shadow); backdrop-filter:blur(16px) saturate(1.25); -webkit-backdrop-filter:blur(16px) saturate(1.25);
+        box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.35); backdrop-filter:blur(16px) saturate(1.25); -webkit-backdrop-filter:blur(16px) saturate(1.25);
+        backdrop-filter:url(#lg-refract) blur(3px) saturate(1.6);
       }
       .panel-title{
         font-family:var(--display); font-weight:400; font-size:24px; margin:0 0 24px;
@@ -668,7 +671,8 @@
         grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between;
         gap:22px; flex-wrap:wrap; padding:12px 12px 12px 30px; border-radius:999px;
         background:var(--glass); border:1px solid var(--glass-border);
-        box-shadow:var(--shadow); backdrop-filter:blur(16px) saturate(1.25); -webkit-backdrop-filter:blur(16px) saturate(1.25);
+        box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.35); backdrop-filter:blur(16px) saturate(1.25); -webkit-backdrop-filter:blur(16px) saturate(1.25);
+        backdrop-filter:url(#lg-refract) blur(3px) saturate(1.6);
       }
       .summary-line{ font-size:13.5px; letter-spacing:.04em; color:var(--muted); margin:0; min-height:18px; }
       .summary-line .eng{ font-family:var(--display); font-style:italic; font-size:15.5px; color:var(--gold); }

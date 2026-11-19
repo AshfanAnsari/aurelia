@@ -610,6 +610,20 @@ export default function App() {
       {/* Canvas overlay: pour stream, splash droplets, meniscus shimmer */}
       <canvas id="pour-fx" ref={fxCanvasRef} aria-hidden="true" />
 
+      {/* Liquid Glass refraction filter (trial): chained into backdrop-filter
+          by .bento-shell / .bento-panel / .panel / .cfg-pricebar in Chromium —
+          real glass bends the backdrop instead of only blurring it.
+          Safari/Firefox cannot parse url() in backdrop-filter, drop that
+          declaration and keep the plain blur declared before it. */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <defs>
+          <filter id="lg-refract">
+            <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="7" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="20" />
+          </filter>
+        </defs>
+      </svg>
+
       <Overlays
         concierge={concierge}
         conciergeMsg={conciergeMsg}
