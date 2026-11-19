@@ -1,19 +1,76 @@
-import { inr } from '../lib';
+import { useEffect, useRef } from 'react';
+import { inr, REDUCED } from '../lib';
 import { DEALS, POPULAR } from '../data';
 import { IcoStar, IcoHeart, IcoBag, IcoArrL, IcoArrR, IcoArrUR, IcoTag } from './icons';
 
-/* 3 · THE COLLECTION — the bento: New Deals slider, sale panel, customize
-   panel and Popular Items, all sharing the one bag. */
+/* Popular Items track = the full six-piece collection: the three Popular
+   cards plus the three deal pieces in pop-card dress (same titles, prices
+   and images — bag wiring identical). */
+const DEAL_POP_STYLE = {
+  choker: { bg: '#7A4A3A', text: '#FFFFFF', pill: 'rgba(255,255,255,.22)', buy: 'rgba(255,255,255,.28)' },
+  'ruby-cuff': { bg: '#6E1E28', text: '#FFFFFF', pill: 'rgba(255,255,255,.22)', buy: 'rgba(255,255,255,.28)' },
+  'eternity-bands': { bg: '#2E4038', text: '#FFFFFF', pill: 'rgba(255,255,255,.22)', buy: 'rgba(255,255,255,.28)' },
+};
+const POP_TRACK = POPULAR.concat(DEALS.map((d) => Object.assign({}, d, DEAL_POP_STYLE[d.id])));
+
+/* Mouse drag-to-scroll for the swipe tracks (touch uses native scrolling).
+   A drag past 6px suppresses the click that follows it, so card buttons
+   never fire after a drag. */
+function useDragScroll(ref) {
+  const drag = useRef(null);
+  return {
+    onPointerDown(e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      const el = ref.current;
+      if (!el) return;
+      drag.current = { x: e.clientX, left: el.scrollLeft, moved: false };
+      el.classList.add('dragging');
+    },
+    onPointerMove(e) {
+      const d = drag.current;
+      const el = ref.current;
+      if (!d || !el) return;
+      const dx = e.clientX - d.x;
+      if (Math.abs(dx) > 6) d.moved = true;
+      if (d.moved) el.scrollLeft = d.left - dx;
+    },
+    onPointerUp() {
+      const el = ref.current;
+      if (el) el.classList.remove('dragging');
+      setTimeout(() => {
+        drag.current = null;
+      }, 0);
+    },
+    onPointerCancel() {
+      const el = ref.current;
+      if (el) el.classList.remove('dragging');
+      drag.current = null;
+    },
+    onClickCapture(e) {
+      if (drag.current && drag.current.moved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    },
+    onDragStart(e) {
+      e.preventDefault();
+    },
+  };
+}
+
+/* 3 · THE COLLECTION — the bento: New Deals swipe slider, sale panel,
+   customize panel and the Popular Items swipe track, all sharing the bag. */
 export default function Collection({
   collHi,
   deal,
   nextDeal,
   dealIdx,
-  dealFav,
+  dealFavs,
   bagCount,
   popFavs,
   onPrevDeal,
   onNextDeal,
+  onDealIdxChange,
   onToggleDealFav,
   onTogglePopFav,
   onAddToBag,
@@ -23,6 +80,46 @@ export default function Collection({
   onOpenCustom,
   onToast,
 }) {
+  const dealTrackRef = useRef(null);
+  const popTrackRef = useRef(null);
+  const dealDrag = useDragScroll(dealTrackRef);
+  const popDrag = useDragScroll(popTrackRef);
+  const scrollRaf = useRef(0);
+
+  /* Buttons / state changes scroll the deal track to the active deal. */
+  useEffect(() => {
+    const t = dealTrackRef.current;
+    if (!t) return;
+    const card = t.children[dealIdx];
+    if (!card) return;
+    const target = card.offsetLeft - t.offsetLeft - (t.clientWidth - card.clientWidth) / 2;
+    if (Math.abs(t.scrollLeft - target) > 4) {
+      t.scrollTo({ left: target, behavior: REDUCED ? 'auto' : 'smooth' });
+    }
+  }, [dealIdx]);
+
+  /* Swiping the deal track drives the shared deal index (and the backdrop). */
+  function onDealScroll() {
+    const t = dealTrackRef.current;
+    if (!t || scrollRaf.current) return;
+    scrollRaf.current = requestAnimationFrame(() => {
+      scrollRaf.current = 0;
+      const mid = t.scrollLeft + t.clientWidth / 2;
+      let best = 0;
+      let bestD = Infinity;
+      for (let i = 0; i < t.children.length; i++) {
+        const c = t.children[i];
+        const center = c.offsetLeft - t.offsetLeft + c.clientWidth / 2;
+        const d = Math.abs(center - mid);
+        if (d < bestD) {
+          bestD = d;
+          best = i;
+        }
+      }
+      if (best !== dealIdx) onDealIdxChange(best);
+    });
+  }
+
   return (
     <section className={'section collection-sec' + (collHi ? ' collection-hi' : '')} id="collection" aria-label="The Collection">
       <div className="wrap">
@@ -36,45 +133,44 @@ export default function Collection({
               <img className="deal-bg" src={nextDeal.img} alt="" aria-hidden="true" loading="lazy" />
               <h3 className="bento-h">New Deals</h3>
               <div className="deal-stack">
-                <article className="deal-card" key={deal.id}>
-                  <div className="deal-top">
-                    <div>
-                      <div className="deal-price">{inr(deal.price)}</div>
-                      <div className="deal-title">{deal.title}</div>
-                      <span className="gv-badge">Great Value</span>
-                    </div>
-                    <span className="rating-pill">
-                      <IcoStar />
-                      {deal.rating}
-                    </span>
-                  </div>
-                  <div className="deal-img-wrap">
-                    <img className="deal-img" src={deal.img} alt={deal.alt} loading="lazy" />
-                  </div>
-                  <div className="deal-actions">
-                    <button
-                      className="circle-btn fav"
-                      aria-pressed={dealFav}
-                      aria-label={dealFav ? 'Remove ' + deal.title + ' from saved' : 'Save ' + deal.title}
-                      onClick={() => {
-                        onToggleDealFav(deal);
-                        onToast(dealFav ? 'Removed ' + deal.title + ' from saved' : 'Saved ' + deal.title);
-                      }}
-                    >
-                      <IcoHeart />
-                    </button>
-                    <button className="circle-btn bagadd" aria-label={'Add ' + deal.title + ' to bag'} onClick={() => onAddToBag(deal)}>
-                      <IcoBag />
-                    </button>
-                  </div>
-                </article>
-                <div className="deal-peek" aria-hidden="true">
-                  <span className="peek-ico">
-                    <IcoHeart />
-                  </span>
-                  <span className="peek-ico bag">
-                    <IcoBag />
-                  </span>
+                <div className="deal-track" ref={dealTrackRef} onScroll={onDealScroll} {...dealDrag}>
+                  {DEALS.map((d) => {
+                    const fav = !!dealFavs[d.id];
+                    return (
+                      <article className="deal-card" key={d.id}>
+                        <div className="deal-top">
+                          <div>
+                            <div className="deal-price">{inr(d.price)}</div>
+                            <div className="deal-title">{d.title}</div>
+                            <span className="gv-badge">Great Value</span>
+                          </div>
+                          <span className="rating-pill">
+                            <IcoStar />
+                            {d.rating}
+                          </span>
+                        </div>
+                        <div className="deal-img-wrap">
+                          <img className="deal-img" src={d.img} alt={d.alt} loading="lazy" draggable="false" />
+                        </div>
+                        <div className="deal-actions">
+                          <button
+                            className="circle-btn fav"
+                            aria-pressed={fav}
+                            aria-label={fav ? 'Remove ' + d.title + ' from saved' : 'Save ' + d.title}
+                            onClick={() => {
+                              onToggleDealFav(d);
+                              onToast(fav ? 'Removed ' + d.title + ' from saved' : 'Saved ' + d.title);
+                            }}
+                          >
+                            <IcoHeart />
+                          </button>
+                          <button className="circle-btn bagadd" aria-label={'Add ' + d.title + ' to bag'} onClick={() => onAddToBag(d)}>
+                            <IcoBag />
+                          </button>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               </div>
               <div className="deal-controls">
@@ -139,8 +235,8 @@ export default function Collection({
                     </button>
                   </div>
                 </div>
-                <div className="pop-grid">
-                  {POPULAR.map((item) => {
+                <div className="pop-track" ref={popTrackRef} {...popDrag}>
+                  {POP_TRACK.map((item) => {
                     const fav = !!popFavs[item.id];
                     return (
                       <article className="pop-card" key={item.id} style={{ background: item.bg, color: item.text }}>
@@ -164,7 +260,7 @@ export default function Collection({
                             </button>
                           </div>
                         </div>
-                        <img className="pop-img" src={item.img} alt={item.alt} loading="lazy" />
+                        <img className="pop-img" src={item.img} alt={item.alt} loading="lazy" draggable="false" />
                         <div className="pop-buy-row">
                           <button
                             className="buy-pill"

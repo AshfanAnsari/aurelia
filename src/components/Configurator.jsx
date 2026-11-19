@@ -3,9 +3,12 @@ import { METALS, STONES, CARATS, VIEWS } from '../data';
 import { IcoPen, IcoCheck } from './icons';
 
 /* 4 · CONFIGURATOR — ring film in its porcelain studio frame, metal / stone /
-   carat / engraving, animated price. Price = metal + stone + carat add-on. */
+   carat / engraving, animated price. Price = metal + stone + carat add-on.
+   staticMedia renders the poster still instead of the <video> — used by the
+   theme pour's reveal layer so only ONE ring video ever exists/plays. */
 export default function Configurator({
   noFilm,
+  staticMedia,
   mobile,
   ringVideoRef,
   view,
@@ -31,7 +34,7 @@ export default function Configurator({
         <div className="cfg-grid">
           <div className="cfg-stage-card rv">
             <div className="cfg-film-frame">
-              {noFilm ? (
+              {noFilm || staticMedia ? (
                 <img className="poster-still" src={img('ring-poster.jpg')} alt="Gold solitaire ring with a diamond, in the atelier studio frame" />
               ) : (
                 <video

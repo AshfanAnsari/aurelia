@@ -17,6 +17,14 @@ function BigSvg({ children }) {
   );
 }
 
+export function IcoDrop() {
+  return (
+    <Svg>
+      <path d="M12 3.2c3.2 3.9 5.7 6.9 5.7 9.9a5.7 5.7 0 1 1-11.4 0c0-3 2.5-6 5.7-9.9z" />
+    </Svg>
+  );
+}
+
 export function IcoSearch() {
   return (
     <Svg>

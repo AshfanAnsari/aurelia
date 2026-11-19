@@ -1,8 +1,10 @@
 import { media, img } from '../lib';
 import { DUST } from '../data';
-import { IcoBurger, IcoSearch, IcoHeart, IcoUser, IcoBag } from './icons';
+import { IcoBurger, IcoSearch, IcoHeart, IcoUser, IcoBag, IcoDrop } from './icons';
 
-/* 1 · HERO — the pendant film (poster-first), brand lockup, headline, CTA. */
+/* 1 · HERO — the pendant film (poster-first), brand lockup, headline, CTA.
+   staticMedia renders the poster instead of the <video> — used by the theme
+   pour's reveal layer so only ONE hero video ever exists/plays. */
 export default function Hero({
   noFilm,
   mobile,
@@ -14,13 +16,17 @@ export default function Hero({
   onToggleWish,
   onOpenConcierge,
   onOpenBag,
+  theme,
+  onToggleTheme,
+  staticMedia,
 }) {
   const poster = mobile ? img('hero-poster-mobile.jpg') : img('hero-poster.jpg');
+  const dark = theme === 'dark';
   return (
     <section className={'hero' + (noFilm ? ' no-video' : '')} id="hero">
       <span id="top" />
       <div className="hero-media" aria-hidden="true">
-        {noFilm ? (
+        {noFilm || staticMedia ? (
           <img src={poster} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         ) : (
           <video
@@ -67,6 +73,16 @@ export default function Hero({
           <div className="brand-sub">Haute Joaillerie</div>
         </div>
         <div className="head-right">
+          <button
+            className="head-action theme-toggle"
+            onClick={(e) => onToggleTheme(e.currentTarget)}
+            aria-pressed={dark}
+            aria-label={dark ? 'Pour the light theme' : 'Pour the dark theme'}
+            title={dark ? 'Pour light' : 'Pour dark'}
+          >
+            <IcoDrop />
+            <span className="lbl">{dark ? 'Pour light' : 'Pour dark'}</span>
+          </button>
           <button className="head-action" onClick={onOpenSearch} aria-label="Search">
             <IcoSearch />
             <span className="lbl">Search</span>
