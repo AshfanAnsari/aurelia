@@ -58,6 +58,10 @@
       button,[role="button"],input,textarea,select{ min-height:2rem; }
       a{ color:inherit; }
       img{ max-width:100%; }
+      /* Touch hygiene (touch devices only in effect): no grey tap flash,
+         no double-tap-zoom delay on controls. */
+      *{ -webkit-tap-highlight-color:transparent; }
+      button,a,input,textarea,select,label{ touch-action:manipulation; }
       :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
       .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
@@ -915,6 +919,51 @@
       @media (max-width:374px){
         .brand-name{ font-size:21px; }
         .hero-copy h1{ font-size:40px; }
+      }
+      /* ================= PHONE OPTIMISATION (audit pass) =================
+         Responsive-scoped only — desktop rules above are untouched. */
+      @media (max-width:900px){
+        /* Safe areas on the fixed chrome (notch / home indicator) */
+        .slim-bar{ height:calc(58px + env(safe-area-inset-top)); padding-top:env(safe-area-inset-top); gap:10px; }
+        .hero-head{ padding-top:calc(18px + env(safe-area-inset-top)); }
+        .drawer{ padding-left:calc(26px + env(safe-area-inset-left)); padding-bottom:calc(34px + env(safe-area-inset-bottom)); }
+        .search-overlay{ padding-top:calc(88px + env(safe-area-inset-top)); padding-bottom:calc(32px + env(safe-area-inset-bottom)); }
+        .search-overlay .close-x{ top:calc(14px + env(safe-area-inset-top)); right:calc(14px + env(safe-area-inset-right)); }
+        /* Hero header: the three icon actions get full 44px targets and the
+           brand column is allowed to breathe — no crowding at 360px. */
+        .hero-head{ grid-template-columns:44px 1fr auto; }
+        .head-action{ min-width:44px; justify-content:center; padding:8px 4px; }
+        .brand-name{ letter-spacing:.24em; text-indent:.24em; }
+        /* Phone loads the phone poster as the hero's CSS backdrop too
+           (43 KB mobile still instead of the 90 KB desktop one). */
+        .hero{ background-image:url("/aurelia/img/hero-poster-mobile.jpg"); }
+        /* Headline scales with the viewport — never overflows at 360px. */
+        .hero-copy h1{ font-size:clamp(37px, 11.5vw, 44px); }
+        /* Touch targets that were under 44px */
+        .pop-fav{ width:44px; height:44px; min-height:44px; }
+        .list-add{ min-height:44px; }
+        .concierge .close-x{ width:44px; height:44px; }
+        /* iOS focus-zoom guard: form text renders at 16px on phone */
+        .concierge textarea,.shop-select,.shop-input,.circle-form input{ font-size:16px; }
+        /* Type floor for functional labels (was 9.5–11.5px) */
+        .stat .lbl,.cat-label,.gv-badge,.concierge label,.hero-scroll-hint,
+        .group-label,.field-label,.pop-rating,.buy-pill .bp-txt,
+        .search-result .sr-cat,.social-lbl{ font-size:12px; }
+        .metal-opt{ font-size:12.5px; }
+        .brand-sub{ font-size:9px; }
+        /* Modals become bottom sheets: full-width, one-handed, home-bar aware */
+        .shop-modal{ padding:0; align-items:flex-end; }
+        .shop-panel,.shop-panel.wide{
+          width:100%; max-height:88vh; max-height:88dvh;
+          border-radius:24px 24px 0 0;
+          padding-bottom:calc(20px + env(safe-area-inset-bottom));
+        }
+        .legal{ padding:0; align-items:flex-end; }
+        .legal-panel{
+          width:100%; max-height:88vh; max-height:88dvh;
+          border-radius:24px 24px 0 0;
+          padding-bottom:calc(26px + env(safe-area-inset-bottom));
+        }
       }
       @media (prefers-reduced-motion: reduce){
         html{ scroll-behavior:auto; }

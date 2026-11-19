@@ -109,12 +109,28 @@ export default function App() {
 
   const bagTotal = bag.reduce((sum, i) => sum + i.price, 0);
 
-  const mobile = isMobile();
+  /* Viewport class — reactive: the film variant follows rotation/resize
+     across the 900px breakpoint instead of freezing at first render. */
+  const [mobile, setMobile] = useState(isMobile);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)');
+    const onChange = () => setMobile(mq.matches);
+    onChange();
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else mq.addListener(onChange);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', onChange);
+      else mq.removeListener(onChange);
+    };
+  }, []);
   const noFilm = REDUCED || SAVE_DATA;
 
-  /* Committed theme → document tokens (body + overlays) + persistence */
+  /* Committed theme → document tokens (body + overlays) + persistence +
+     the browser chrome colour (theme-color follows the committed theme). */
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    const tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute('content', theme === 'dark' ? '#0E0E11' : '#F6F6F7');
     try {
       window.localStorage.setItem(THEME_KEY, theme);
     } catch (e) {
@@ -254,8 +270,10 @@ export default function App() {
         spawnSplash(spoutX, baseSurfaceYViewport, 1, 0.45);
       }
 
-      /* The sloshing surface — 52 segments, multi-harmonic (Ortune) */
-      const segments = 52;
+      /* The sloshing surface — multi-harmonic (Ortune). Quality knob:
+         small screens draw fewer wave segments (30 vs 52) so the dual-layer
+         pour stays smooth on phone GPUs; the shape is indistinguishable. */
+      const segments = W <= 600 ? 30 : 52;
       const waveAmp = fillP <= 0 ? 0 : Math.sin(fillP * Math.PI) * 16 + 4 * (1 - fillP);
       const tSec = elapsed * 0.0058;
       const wavePoints = [];
