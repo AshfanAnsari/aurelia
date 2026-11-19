@@ -19,7 +19,7 @@ export default function Heritage() {
             </a>
           </div>
           <div className="heritage-photo rv rv-d1">
-            <img src={img('heritage.jpg')} alt="Emerald and diamond necklace, earrings and ring presented in an open jewellery box" loading="lazy" />
+            <img src={img('heritage.jpg')} alt="Emerald and diamond necklace, earrings and ring presented in an open jewellery box" loading="lazy" decoding="async" />
           </div>
         </div>
         <div className="stat-row rv">

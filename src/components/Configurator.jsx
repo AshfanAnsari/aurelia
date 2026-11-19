@@ -35,7 +35,7 @@ export default function Configurator({
           <div className="cfg-stage-card rv">
             <div className="cfg-film-frame">
               {noFilm || staticMedia ? (
-                <img className="poster-still" src={img('ring-poster.jpg')} alt="Gold solitaire ring with a diamond, in the atelier studio frame" />
+                <img className="poster-still" decoding="async" src={img('ring-poster.jpg')} alt="Gold solitaire ring with a diamond, in the atelier studio frame" />
               ) : (
                 <video
                   ref={(el) => {
@@ -62,7 +62,7 @@ export default function Configurator({
                   aria-label={vw.label}
                   aria-pressed={view === i}
                 >
-                  <img src={vw.src} alt="" />
+                  <img src={vw.src} alt="" loading="lazy" decoding="async" />
                 </button>
               ))}
             </div>

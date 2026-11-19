@@ -120,7 +120,7 @@ export default function Overlays({
                     if (el) el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
                   }}
                 >
-                  <img src={item.img} alt="" />
+                  <img src={item.img} alt="" loading="lazy" decoding="async" />
                   <span>
                     <span className="sr-name">{item.title}</span>
                     <br />
@@ -226,7 +226,7 @@ export default function Overlays({
                 {bag.map((i) => (
                   <div className="bag-row" key={i.key}>
                     <div className="br-main">
-                      <img src={i.img} alt="" />
+                      <img src={i.img} alt="" loading="lazy" decoding="async" />
                       <div>
                         <div className="br-name">{i.title}</div>
                         <div className="br-price">{inr(i.price)}</div>
@@ -323,7 +323,7 @@ export default function Overlays({
             {(listMode === 'sale' ? DEALS : DEALS.concat(POPULAR)).map((i) => (
               <div className="bag-row" key={i.id}>
                 <div className="br-main">
-                  <img src={i.img} alt="" />
+                  <img src={i.img} alt="" loading="lazy" decoding="async" />
                   <div>
                     <div className="br-name">{i.title}</div>
                     <div className="br-price">

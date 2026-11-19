@@ -130,7 +130,7 @@ export default function Collection({
         <div className="bento-shell rv">
           <div className="bento-grid">
             <section className="bento-panel bento-deals" aria-label="New Deals">
-              <img className="deal-bg" src={nextDeal.img} alt="" aria-hidden="true" loading="lazy" />
+              <img className="deal-bg" src={nextDeal.img} alt="" aria-hidden="true" loading="lazy" decoding="async" />
               <h3 className="bento-h">New Deals</h3>
               <div className="deal-stack">
                 <div className="deal-track" ref={dealTrackRef} onScroll={onDealScroll} {...dealDrag}>
@@ -150,7 +150,7 @@ export default function Collection({
                           </span>
                         </div>
                         <div className="deal-img-wrap">
-                          <img className="deal-img" src={d.img} alt={d.alt} loading="lazy" draggable="false" />
+                          <img className="deal-img" src={d.img} alt={d.alt} loading="lazy" decoding="async" draggable="false" />
                         </div>
                         <div className="deal-actions">
                           <button
@@ -204,7 +204,7 @@ export default function Collection({
                     <IcoTag />
                     75% off
                   </button>
-                  <img className="sale-img" src={DEALS[1].img} alt="" aria-hidden="true" loading="lazy" />
+                  <img className="sale-img" src={DEALS[1].img} alt="" aria-hidden="true" loading="lazy" decoding="async" />
                 </section>
                 <section className="bento-panel bento-custom lift" aria-label="Customize your products">
                   <h3>
@@ -212,7 +212,7 @@ export default function Collection({
                     <br />
                     products
                   </h3>
-                  <img className="custom-img" src={DEALS[2].img} alt="Custom diamond eternity bands" loading="lazy" />
+                  <img className="custom-img" src={DEALS[2].img} alt="Custom diamond eternity bands" loading="lazy" decoding="async" />
                   <button className="get-started" onClick={onOpenCustom}>
                     <span>Get Started</span>
                     <span className="go" aria-hidden="true">
@@ -260,7 +260,7 @@ export default function Collection({
                             </button>
                           </div>
                         </div>
-                        <img className="pop-img" src={item.img} alt={item.alt} loading="lazy" draggable="false" />
+                        <img className="pop-img" src={item.img} alt={item.alt} loading="lazy" decoding="async" draggable="false" />
                         <div className="pop-buy-row">
                           <button
                             className="buy-pill"

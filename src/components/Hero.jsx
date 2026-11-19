@@ -27,7 +27,7 @@ export default function Hero({
       <span id="top" />
       <div className="hero-media" aria-hidden="true">
         {noFilm || staticMedia ? (
-          <img src={poster} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={poster} alt="" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         ) : (
           <video
             ref={(el) => {
