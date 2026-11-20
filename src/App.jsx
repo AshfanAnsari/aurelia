@@ -11,6 +11,7 @@ import Voices from './components/Voices';
 import InnerCircle from './components/InnerCircle';
 import Footer from './components/Footer';
 import Overlays from './components/Overlays';
+import Intro from './components/Intro';
 
 /* ---------------- Theme pour ----------------
    The whole page exists twice during a pour: the base layer (committed
@@ -671,6 +672,9 @@ export default function App() {
         onAddToBag={addToBag}
         toast={toast}
       />
+
+      {/* Opening intro — transition only; the hero beneath is untouched */}
+      {!REDUCED ? <Intro /> : null}
     </div>
   );
 }
